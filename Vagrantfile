@@ -19,11 +19,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise32"
+  config.vm.box = "ubuntu/trusty64-sb"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  # config.vm.box_url = "http://domain.com/path/to/above.box"
+  config.vm.box_url = "https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -67,7 +67,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.
   # You will need to create the manifests directory and a manifest in
-  # the file precise32.pp in the manifests_path directory.
+  # the file ubuntu/trusty64-sb.pp in the manifests_path directory.
   #
   # An example Puppet manifest to provision the message of the day:
   #
@@ -90,22 +90,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
-
-  # OS-specific actions
   config.vm.provision "shell", path: "script.sh"
-
   config.vm.provision :chef_solo do |chef|
-  #  chef.cookbooks_path = "../my-recipes/cookbooks"
-  #  chef.roles_path = "../my-recipes/roles"
-  #  chef.data_bags_path = "../my-recipes/data_bags"
+  #   chef.cookbooks_path = "../my-recipes/cookbooks"
+  #   chef.roles_path = "../my-recipes/roles"
+  #   chef.data_bags_path = "../my-recipes/data_bags"
     chef.add_recipe "env::development"
   #   chef.add_recipe "mysql"
   #   chef.add_role "web"
-  #
-  #   # You may also specify custom JSON attributes:
-    # chef.json = { :user => { :name => 'vagrant', 
-    #                          :home => '/home/vagrant' } }
   end
+  config.vm.provision "shell", path: "postinstall.sh"
 
   # Enable provisioning with chef server, specifying the chef server URL,
   # and the path to the validation key (relative to this Vagrantfile).

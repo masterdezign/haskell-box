@@ -2,6 +2,13 @@
   package(name)
 end
 
+# Glasgow Haskell Compiler
+%w(libgmp-dev freeglut3 freeglut3-dev ghc).each do |name|
+  package(name)
+end
+# The next one is done in the postinstall.sh
+# package("haskell-platform")
+
 conf = { :user => { :name => 'vagrant',
                     :home =>  '/home/vagrant/' } }
 
